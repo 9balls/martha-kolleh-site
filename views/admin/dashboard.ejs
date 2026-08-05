@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Admin Dashboard — Martha Kolleh</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/public/css/admin.css">
+</head>
+<body>
+
+<header class="admin-topbar">
+  <span class="admin-wordmark">MARTHA KOLLEH — ADMIN</span>
+  <div>
+    <a href="/" target="_blank" class="admin-view-link">View live site ↗</a>
+    <a href="/admin/backup" class="admin-view-link">Download Backup ↓</a>
+    <form method="POST" action="/admin/logout" style="display:inline;">
+      <button class="admin-logout">Log out</button>
+    </form>
+  </div>
+</header>
+
+<main class="admin-main">
+
+  <% if (saved) { %><p class="admin-flash">Saved.</p><% } %>
+  <% if (typeof uploadError !== 'undefined' && uploadError) { %><p class="admin-flash admin-flash-error"><%= uploadError %></p><% } %>
+
+  <!-- ============ BIO ============ -->
+  <section class="admin-card">
+    <h2>Bio &amp; Basic Info</h2>
+    <form method="POST" action="/admin/bio" class="admin-form-grid">
+      <label>Full name
+        <input type="text" name="fullName" value="<%= data.bio.fullName %>" required>
+      </label>
+      <label>Positions <span class="hint">(comma-separated)</span>
+        <input type="text" name="positions" value="<%= data.bio.positions.join(', ') %>">
+      </label>
+      <label>Date of birth
+        <input type="date" name="dateOfBirth" value="<%= data.bio.dateOfBirth %>">
+      </label>
+      <label>Place of birth
+        <input type="text" name="placeOfBirth" value="<%= data.bio.placeOfBirth %>">
+      </label>
+      <label>County of origin
+        <input type="text" name="countyOfOrigin" value="<%= data.bio.countyOfOrigin %>">
+      </label>
+      <label>Nationality
+        <input type="text" name="nationality" value="<%= data.bio.nationality %>">
+      </label>
+      <label>Height
+        <input type="text" name="height" value="<%= data.bio.height %>" placeholder="e.g. 168 cm">
+      </label>
+      <label>Jersey number
+        <input type="text" name="jerseyNumber" value="<%= data.bio.jerseyNumber %>" placeholder="e.g. 7">
+      </label>
+      <label>Preferred foot
+        <input type="text" name="preferredFoot" value="<%= data.bio.preferredFoot %>" placeholder="e.g. Right">
+      </label>
+      <label>Current club
+        <input type="text" name="currentClub" value="<%= data.bio.currentClub %>">
+      </label>
+      <label>Contract
+        <input type="text" name="contractLength" value="<%= data.bio.contractLength %>">
+      </label>
+      <label class="span-2">Summary
+        <textarea name="summary" rows="3"><%= data.bio.summary %></textarea>
+      </label>
+      <button type="submit" class="btn btn-primary span-2">Save Bio</button>
+    </form>
+  </section>
+
+  <!-- ============ NATIONAL TEAM ============ -->
+  <section class="admin-card">
+    <h2>National Team</h2>
+    <form method="POST" action="/admin/national-team" class="admin-form-grid">
+      <label>Caps
+        <input type="text" name="caps" value="<%= data.nationalTeam.caps %>">
+      </label>
+      <label>Debut
+        <input type="text" name="debut" value="<%= data.nationalTeam.debut %>">
+      </label>
+      <label>Goals
+        <input type="text" name="goals" value="<%= data.nationalTeam.goals %>">
+      </label>
+      <label class="span-2">Note
+        <textarea name="note" rows="2"><%= data.nationalTeam.note %></textarea>
+      </label>
+      <button type="submit" class="btn btn-primary span-2">Save National Team Info</button>
+    </form>
+  </section>
+
+  <!-- ============ CAREER TIMELINE ============ -->
+  <section class="admin-card">
+    <h2>Career Timeline</h2>
+    <ul class="admin-list">
+      <% data.career.forEach((step, i) => { %>
+      <li>
+        <div>
+          <strong><%= step.title %></strong> <% if (step.current) { %><span class="badge">Current</span><% } %>
+          <p><%= step.note %></p>
+        </div>
+        <div class="admin-list-actions">
+          <form method="POST" action="/admin/career/move/<%= i %>/up">
+            <button class="btn-small" <% if (i === 0) { %>disabled<% } %>>↑</button>
+          </form>
+          <form method="POST" action="/admin/career/move/<%= i %>/down">
+            <button class="btn-small" <% if (i === data.career.length - 1) { %>disabled<% } %>>↓</button>
+          </form>
+          <% if (!step.current) { %>
+          <form method="POST" action="/admin/career/set-current/<%= i %>"><button class="btn-small">Mark current</button></form>
+          <% } %>
+          <form method="POST" action="/admin/career/delete/<%= i %>" onsubmit="return confirm('Remove this career step?');"><button class="btn-small btn-danger">Delete</button></form>
+        </div>
+      </li>
+      <% }) %>
+    </ul>
+    <form method="POST" action="/admin/career/add" class="admin-form-grid" style="margin-top:16px;">
+      <label>Title
+        <input type="text" name="title" placeholder="e.g. New Club FC" required>
+      </label>
+      <label class="span-2">Note
+        <input type="text" name="note" placeholder="Short description">
+      </label>
+      <label class="checkbox-label"><input type="checkbox" name="current"> Mark as current club</label>
+      <button type="submit" class="btn btn-primary span-2">Add Career Step</button>
+    </form>
+  </section>
+
+  <!-- ============ STATS ============ -->
+  <section class="admin-card">
+    <h2>Season Statistics</h2>
+    <div class="table-wrap">
+      <table class="admin-table">
+        <thead><tr><th>Season</th><th>Club</th><th>Comp.</th><th>Apps</th><th>Goals</th><th>Assists</th><th>CS</th><th></th></tr></thead>
+        <tbody>
+          <% data.stats.forEach((row, i) => { %>
+          <tr>
+            <td><%= row.season %></td><td><%= row.club %></td><td><%= row.competition %></td>
+            <td><%= row.apps %></td><td><%= row.goals %></td><td><%= row.assists %></td><td><%= row.cleanSheets %></td>
+            <td>
+              <form method="POST" action="/admin/stats/move/<%= i %>/up" style="display:inline">
+                <button class="btn-small" <% if (i === 0) { %>disabled<% } %>>↑</button>
+              </form>
+              <form method="POST" action="/admin/stats/move/<%= i %>/down" style="display:inline">
+                <button class="btn-small" <% if (i === data.stats.length - 1) { %>disabled<% } %>>↓</button>
+              </form>
+              <form method="POST" action="/admin/stats/delete/<%= i %>" onsubmit="return confirm('Delete this row?');" style="display:inline">
+                <button class="btn-small btn-danger">Delete</button>
+              </form>
+            </td>
+          </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+    <form method="POST" action="/admin/stats/add" class="admin-form-grid" style="margin-top:16px;">
+      <label>Season <input type="text" name="season" placeholder="2026–27"></label>
+      <label>Club <input type="text" name="club"></label>
+      <label>Competition <input type="text" name="competition"></label>
+      <label>Apps <input type="text" name="apps"></label>
+      <label>Goals <input type="text" name="goals"></label>
+      <label>Assists <input type="text" name="assists"></label>
+      <label>Clean Sheets <input type="text" name="cleanSheets"></label>
+      <button type="submit" class="btn btn-primary span-2">Add Season Row</button>
+    </form>
+  </section>
+
+  <!-- ============ GALLERY ============ -->
+  <section class="admin-card">
+    <h2>Photo Gallery</h2>
+    <div class="admin-gallery-grid">
+      <% data.gallery.forEach((img, i) => { %>
+      <div class="admin-gallery-item">
+        <img src="/public/uploads/gallery/<%= img.filename %>" alt="<%= img.alt %>">
+        <form method="POST" action="/admin/gallery/delete/<%= i %>" onsubmit="return confirm('Delete this photo?');">
+          <button class="btn-small btn-danger">Delete</button>
+        </form>
+      </div>
+      <% }) %>
+    </div>
+    <form method="POST" action="/admin/gallery/upload" enctype="multipart/form-data" class="admin-form-grid" style="margin-top:16px;">
+      <label class="span-2">Photo file <span class="hint">(JPG, PNG or WEBP, up to 15MB)</span>
+        <input type="file" name="photo" accept="image/jpeg,image/png,image/webp" required>
+      </label>
+      <label class="span-2">Description <span class="hint">(for accessibility &amp; image search)</span>
+        <input type="text" name="alt" placeholder="e.g. Martha Kolleh making a tackle vs. XYZ FC">
+      </label>
+      <button type="submit" class="btn btn-primary span-2">Upload Photo</button>
+    </form>
+  </section>
+
+  <!-- ============ REELS ============ -->
+  <section class="admin-card">
+    <h2>Reels &amp; Highlight Clips</h2>
+    <ul class="admin-list">
+      <% data.reels.forEach((reel, i) => { %>
+      <li>
+        <div>
+          <strong><%= reel.type === 'upload' ? 'Uploaded video' : 'External link' %></strong>
+          <p><%= reel.type === 'upload' ? reel.src : reel.src %></p>
+          <% if (reel.caption) { %><p class="hint"><%= reel.caption %></p><% } %>
+        </div>
+        <form method="POST" action="/admin/reels/delete/<%= i %>" onsubmit="return confirm('Delete this reel?');">
+          <button class="btn-small btn-danger">Delete</button>
+        </form>
+      </li>
+      <% }) %>
+    </ul>
+
+    <h3 class="admin-subhead">Upload a video file</h3>
+    <form method="POST" action="/admin/reels/upload" enctype="multipart/form-data" class="admin-form-grid">
+      <label class="span-2">Video file <span class="hint">(MP4, WEBM or MOV, up to 150MB)</span>
+        <input type="file" name="reelFile" accept="video/mp4,video/webm,video/quicktime" required>
+      </label>
+      <label class="span-2">Caption <input type="text" name="caption" placeholder="e.g. Full defensive highlights, last 3 matches"></label>
+      <button type="submit" class="btn btn-primary span-2">Upload Video</button>
+    </form>
+
+    <h3 class="admin-subhead">Or link an existing reel</h3>
+    <form method="POST" action="/admin/reels/link" class="admin-form-grid">
+      <label class="span-2">URL <span class="hint">(YouTube, Instagram, TikTok, etc.)</span>
+        <input type="url" name="url" placeholder="https://..." required>
+      </label>
+      <label class="span-2">Caption <input type="text" name="caption"></label>
+      <button type="submit" class="btn btn-primary span-2">Add Reel Link</button>
+    </form>
+  </section>
+
+  <!-- ============ CONTACT ============ -->
+  <section class="admin-card">
+    <h2>Scouting Contact Info</h2>
+    <form method="POST" action="/admin/contact" class="admin-form-grid">
+      <label>Email <input type="email" name="email" value="<%= data.contact.email %>"></label>
+      <label>WhatsApp <input type="text" name="whatsapp" value="<%= data.contact.whatsapp %>"></label>
+      <label>Based in <input type="text" name="basedIn" value="<%= data.contact.basedIn %>"></label>
+      <button type="submit" class="btn btn-primary span-2">Save Contact Info</button>
+    </form>
+  </section>
+
+</main>
+</body>
+</html>

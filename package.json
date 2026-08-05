@@ -1,0 +1,19 @@
+{
+  "name": "martha-kolleh-site",
+  "version": "1.0.0",
+  "description": "Martha Kolleh player profile site with login-protected admin panel",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "set-password": "node scripts/set-admin-password.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "express-session": "^1.18.0",
+    "ejs": "^3.1.10",
+    "multer": "^1.4.5-lts.1",
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^16.4.5",
+    "archiver": "^7.0.1"
+  }
+}

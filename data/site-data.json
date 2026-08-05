@@ -1,0 +1,92 @@
+{
+  "bio": {
+    "fullName": "Martha Kolleh",
+    "positions": [
+      "Right-back",
+      "Right Winger"
+    ],
+    "dateOfBirth": "2004-03-25",
+    "placeOfBirth": "Harbel City, Lower Margibi County, Liberia",
+    "countyOfOrigin": "Nimba County, Liberia",
+    "nationality": "Liberian",
+    "height": "",
+    "preferredFoot": "",
+    "currentClub": "Small Town Football Academy",
+    "contractLength": "2 seasons (upcoming season)",
+    "summary": "Martha Kolleh is a Liberian right-back and right winger currently with Small Town Football Academy. She came through Hippo Football Academy, progressed to Hippo FC's senior team, and spent three seasons with Ravia Angels before signing with Small Town Football Academy."
+  },
+  "career": [
+    {
+      "title": "Hippo Football Academy",
+      "note": "Began her football journey in the academy system.",
+      "current": false
+    },
+    {
+      "title": "Hippo FC — Senior Team",
+      "note": "Earned promotion from the academy to Hippo FC's senior side.",
+      "current": false
+    },
+    {
+      "title": "Loan Spell — Ravia Angels",
+      "note": "Went out on loan to Ravia Angels before returning to Hippo FC.",
+      "current": false
+    },
+    {
+      "title": "Ravia Angels — Permanent Move",
+      "note": "Completed a permanent transfer to Ravia Angels, where she spent three seasons.",
+      "current": false
+    },
+    {
+      "title": "Small Town Football Academy",
+      "note": "Signed a two-season deal ahead of the upcoming season.",
+      "current": true
+    }
+  ],
+  "stats": [
+    {
+      "season": "",
+      "club": "Hippo FC",
+      "competition": "Liberia Women's League",
+      "apps": "",
+      "goals": "",
+      "assists": "",
+      "cleanSheets": ""
+    },
+    {
+      "season": "",
+      "club": "Ravia Angels",
+      "competition": "Liberia Women's League",
+      "apps": "",
+      "goals": "",
+      "assists": "",
+      "cleanSheets": ""
+    },
+    {
+      "season": "2026–27",
+      "club": "Small Town Football Academy",
+      "competition": "Liberia Women's League",
+      "apps": "",
+      "goals": "",
+      "assists": "",
+      "cleanSheets": ""
+    }
+  ],
+  "nationalTeam": {
+    "caps": "",
+    "debut": "",
+    "goals": "",
+    "note": "Represents Liberia at senior national team level."
+  },
+  "gallery": [
+    {
+      "filename": "martha-action-1.jpg",
+      "alt": "Martha Kolleh in match action, playing right-back"
+    }
+  ],
+  "reels": [],
+  "contact": {
+    "email": "",
+    "whatsapp": "",
+    "basedIn": "Monrovia, Liberia"
+  }
+}

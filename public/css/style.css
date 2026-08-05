@@ -1,0 +1,497 @@
+/* ===========================================================
+   Design tokens
+   Ink    #14231C  — near-black forest, pitch at night
+   Pitch  #1F6F4A  — deep grass green, primary
+   Bone   #F2EFE6  — paper cream background
+   Ember  #E2572B  — accent, used sparingly (CTA / key stat)
+   Steel  #4B5A55  — muted supporting text
+   Gold   #C9A24B  — hairline / achievement accent
+   =========================================================== */
+
+:root {
+  --ink: #14231C;
+  --pitch: #1F6F4A;
+  --pitch-dark: #163F2C;
+  --bone: #F2EFE6;
+  --bone-dim: #E7E2D3;
+  --ember: #E2572B;
+  --steel: #4B5A55;
+  --gold: #C9A24B;
+
+  --display: "Fraunces", Georgia, serif;
+  --body: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --mono: "IBM Plex Mono", "SFMono-Regular", Consolas, monospace;
+
+  --wrap: 1120px;
+
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 14px;
+
+  --shadow-sm: 0 1px 2px rgba(20,35,28,0.06), 0 1px 1px rgba(20,35,28,0.04);
+  --shadow-md: 0 8px 24px rgba(20,35,28,0.10), 0 2px 6px rgba(20,35,28,0.06);
+  --shadow-lg: 0 24px 60px rgba(20,35,28,0.30);
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  * { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+}
+
+body {
+  margin: 0;
+  background: var(--bone);
+  color: var(--ink);
+  font-family: var(--body);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+.wrap {
+  max-width: var(--wrap);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+h1, h2, h3 {
+  font-family: var(--display);
+  color: var(--ink);
+  margin: 0 0 0.4em;
+  line-height: 1.05;
+  font-weight: 600;
+}
+
+a { color: inherit; }
+
+.skip-link {
+  position: absolute;
+  left: -999px;
+  top: 0;
+  background: var(--ember);
+  color: #fff;
+  padding: 12px 18px;
+  z-index: 100;
+}
+.skip-link:focus { left: 12px; top: 12px; }
+
+:focus-visible {
+  outline: 3px solid var(--ember);
+  outline-offset: 2px;
+}
+
+.eyebrow {
+  font-family: var(--mono);
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-size: 12px;
+  color: var(--pitch);
+  margin: 0 0 12px;
+  font-weight: 600;
+}
+
+/* ---------------- Header ---------------- */
+.site-header {
+  background: var(--ink);
+  color: var(--bone);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  border-bottom: 1px solid rgba(242,239,230,0.12);
+}
+.header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 64px;
+}
+.wordmark {
+  font-family: var(--mono);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  font-size: 14px;
+}
+.wordmark-num { color: var(--gold); }
+
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 28px;
+  margin: 0;
+  padding: 0;
+}
+nav a {
+  text-decoration: none;
+  font-size: 14px;
+  color: var(--bone-dim);
+  transition: color 0.15s ease;
+}
+nav a:hover { color: var(--bone); }
+.nav-cta {
+  border: 1px solid var(--gold);
+  padding: 6px 14px;
+  border-radius: var(--radius-sm);
+  color: var(--gold) !important;
+  transition: background 0.15s ease, box-shadow 0.15s ease;
+}
+.nav-cta:hover { background: rgba(201,162,75,0.12); box-shadow: var(--shadow-sm); }
+.nav-toggle {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  padding: 8px;
+}
+.nav-toggle span {
+  width: 22px;
+  height: 2px;
+  background: var(--bone);
+}
+
+/* ---------------- Hero / Passport ---------------- */
+.hero {
+  background: var(--pitch);
+  background-image:
+    radial-gradient(circle at 85% 15%, rgba(255,255,255,0.08), transparent 45%),
+    repeating-linear-gradient(90deg, rgba(255,255,255,0.035) 0 1px, transparent 1px 120px);
+  color: var(--bone);
+  padding: 72px 0 96px;
+}
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 56px;
+  align-items: center;
+}
+.hero .eyebrow { color: var(--gold); }
+.hero-copy h1 {
+  font-size: clamp(48px, 7vw, 84px);
+  color: var(--bone);
+  letter-spacing: -0.01em;
+}
+.hero-sub {
+  font-size: 18px;
+  max-width: 46ch;
+  color: var(--bone-dim);
+  margin-bottom: 28px;
+}
+.hero-cta-row { display: flex; gap: 14px; flex-wrap: wrap; }
+
+.btn {
+  display: inline-block;
+  padding: 13px 24px;
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  border: 1px solid transparent;
+  transition: transform 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
+}
+.btn:hover { transform: translateY(-2px); }
+.btn-primary { background: var(--ember); box-shadow: var(--shadow-sm); color: #fff; }
+.btn-primary:hover { background: #cc4a22; box-shadow: var(--shadow-md); }
+.btn-ghost { border-color: rgba(242,239,230,0.5); color: var(--bone); }
+.btn-ghost:hover { background: rgba(242,239,230,0.1); }
+
+/* Signature element: Player Passport card */
+.passport-card {
+  background: var(--bone);
+  color: var(--ink);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.6);
+  box-shadow: var(--shadow-lg);
+  transform: rotate(1.5deg);
+}
+.passport-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--ink);
+  color: var(--bone);
+  padding: 10px 18px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+}
+.passport-flag {
+  background: var(--gold);
+  color: var(--ink);
+  padding: 2px 8px;
+  border-radius: 2px;
+  font-weight: 700;
+}
+.passport-number {
+  font-family: var(--mono);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: var(--gold);
+}
+.passport-photo { aspect-ratio: 4 / 3; overflow: hidden; }
+.passport-photo img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  filter: grayscale(15%) contrast(1.05);
+  display: block;
+}
+.passport-fields {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  margin: 0;
+}
+.passport-fields > div {
+  padding: 12px 18px;
+  border-top: 1px solid var(--bone-dim);
+  border-right: 1px solid var(--bone-dim);
+}
+.passport-fields > div:nth-child(2n) { border-right: none; }
+.passport-fields dt {
+  font-family: var(--mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--steel);
+  margin-bottom: 3px;
+}
+.passport-fields dd {
+  margin: 0;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+/* ---------------- Journey / Timeline ---------------- */
+.journey { padding: 96px 0; }
+.journey h2 { font-size: clamp(30px, 4vw, 42px); margin-bottom: 48px; }
+
+.timeline {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-left: 2px solid var(--bone-dim);
+}
+.timeline-item {
+  display: flex;
+  gap: 24px;
+  padding: 0 0 40px 28px;
+  position: relative;
+}
+.timeline-item:last-child { padding-bottom: 0; }
+.timeline-num {
+  position: absolute;
+  left: -15px;
+  top: 0;
+  width: 28px; height: 28px;
+  background: var(--bone);
+  border: 2px solid var(--pitch);
+  color: var(--pitch);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 600;
+}
+.timeline-current .timeline-num {
+  background: var(--ember);
+  border-color: var(--ember);
+  color: #fff;
+}
+.timeline-item h3 { font-size: 20px; margin-bottom: 6px; display: flex; align-items: center; gap: 10px; }
+.timeline-item p { margin: 0; color: var(--steel); max-width: 60ch; }
+.tag-current {
+  font-family: var(--mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  background: var(--ember);
+  color: #fff;
+  padding: 3px 9px;
+  border-radius: 20px;
+}
+
+/* ---------------- Stats ---------------- */
+.stats { background: var(--ink); color: var(--bone); padding: 96px 0; }
+.stats .eyebrow { color: var(--gold); }
+.stats h2 { color: var(--bone); font-size: clamp(30px, 4vw, 42px); }
+.stats-note { color: rgba(242,239,230,0.6); font-size: 14px; margin-bottom: 32px; }
+
+.table-wrap {
+  overflow: hidden;
+  overflow-x: auto;
+  border: 1px solid rgba(242,239,230,0.14);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--mono);
+  font-size: 14px;
+  min-width: 640px;
+}
+thead th {
+  text-align: left;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 11px;
+  color: var(--gold);
+  padding: 10px 14px;
+  border-bottom: 1px solid rgba(242,239,230,0.25);
+}
+tbody td {
+  padding: 14px;
+  border-bottom: 1px solid rgba(242,239,230,0.1);
+}
+tbody tr:hover { background: rgba(242,239,230,0.04); }
+
+/* ---------------- National team ---------------- */
+.national { padding: 88px 0; }
+.national-grid {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: 48px;
+  align-items: center;
+}
+.national h2 { font-size: clamp(28px, 3.6vw, 38px); }
+.stat-chips {
+  display: flex;
+  gap: 16px;
+  margin: 0;
+  flex-wrap: wrap;
+}
+.chip {
+  background: #fff;
+  border: 1px solid var(--bone-dim);
+  border-radius: var(--radius-md);
+  padding: 18px 22px;
+  min-width: 110px;
+  text-align: center;
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+.chip:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+.chip dt {
+  font-family: var(--mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--steel);
+  margin-bottom: 6px;
+}
+.chip dd { margin: 0; font-family: var(--display); font-size: 30px; font-weight: 600; color: var(--pitch); }
+
+/* ---------------- Gallery ---------------- */
+.gallery { background: var(--bone-dim); padding: 88px 0; }
+.gallery h2 { font-size: clamp(28px, 3.6vw, 38px); }
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 16px;
+  margin-top: 32px;
+}
+.gallery-grid figure {
+  margin: 0;
+  overflow: hidden;
+  border-radius: var(--radius-md);
+  aspect-ratio: 4/5;
+  border: 1px solid rgba(20,35,28,0.08);
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow 0.3s ease;
+}
+.gallery-grid figure:hover { box-shadow: var(--shadow-md); }
+.gallery-grid img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.4s ease; }
+.gallery-grid img:hover { transform: scale(1.04); }
+
+/* ---------------- Contact ---------------- */
+.contact { padding: 96px 0 112px; }
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 48px;
+  align-items: start;
+}
+.contact h2 { font-size: clamp(28px, 3.6vw, 38px); }
+.contact p { color: var(--steel); max-width: 52ch; }
+.contact-fields {
+  background: var(--ink);
+  color: var(--bone);
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(242,239,230,0.08);
+  box-shadow: var(--shadow-md);
+  padding: 8px 26px;
+}
+.contact-fields > div {
+  padding: 18px 0;
+  border-bottom: 1px solid rgba(242,239,230,0.15);
+}
+.contact-fields > div:last-child { border-bottom: none; }
+.contact-fields dt {
+  font-family: var(--mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--gold);
+  margin-bottom: 4px;
+}
+.contact-fields dd { margin: 0; font-weight: 600; }
+.contact-fields a { text-decoration: none; }
+.contact-fields a:hover { text-decoration: underline; }
+
+/* ---------------- Footer ---------------- */
+.site-footer {
+  background: var(--ink);
+  color: rgba(242,239,230,0.5);
+  padding: 24px 0;
+  font-size: 13px;
+}
+
+/* ---------------- Responsive ---------------- */
+@media (max-width: 880px) {
+  .hero-grid { grid-template-columns: 1fr; }
+  .passport-card { transform: none; max-width: 420px; }
+  .national-grid, .contact-grid { grid-template-columns: 1fr; }
+  nav ul {
+    position: fixed;
+    inset: 64px 0 0 0;
+    background: var(--ink);
+    flex-direction: column;
+    padding: 32px 24px;
+    gap: 22px;
+    transform: translateX(100%);
+    transition: transform 0.25s ease;
+  }
+  nav ul.open { transform: translateX(0); }
+  .nav-toggle { display: flex; }
+}
+
+@media (max-width: 560px) {
+  table { min-width: 0; }
+  thead { display: none; }
+  tbody tr {
+    display: block;
+    margin-bottom: 14px;
+    border: 1px solid rgba(242,239,230,0.15);
+    border-radius: 4px;
+  }
+  tbody td {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    padding: 10px 14px;
+    border-bottom: 1px solid rgba(242,239,230,0.08);
+    text-align: left;
+  }
+  tbody td::before {
+    content: attr(data-label);
+    color: var(--gold);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+}
